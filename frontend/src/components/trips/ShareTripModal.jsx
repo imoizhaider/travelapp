@@ -5,6 +5,8 @@ import Modal from '../common/Modal';
 import Input from '../common/Input';
 import Button from '../common/Button';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+
 export default function ShareTripModal({ open, onClose, tripId, shareLinks, collaborators, onCreateShareLink, onAddCollaborator, onUpdateCollaborator }) {
   const [accessLevel, setAccessLevel] = useState('view');
   const [collabEmail, setCollabEmail] = useState('');
@@ -31,7 +33,7 @@ export default function ShareTripModal({ open, onClose, tripId, shareLinks, coll
     setInviting(true);
     setError('');
     try {
-      const response = await fetch(`http://localhost:5000/api/users/by-email/${encodeURIComponent(collabEmail)}`);
+      const response = await fetch(`${API_BASE_URL}/api/users/by-email/${encodeURIComponent(collabEmail)}`);
       if (!response.ok) throw new Error('User not found');
       const { data: user } = await response.json();
       await onAddCollaborator({ userId: user.user_id, accessLevel: collabAccess, status: 'pending' });
