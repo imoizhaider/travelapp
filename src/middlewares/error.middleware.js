@@ -7,6 +7,12 @@ const notFound = (req, res, next) => {
 const errorHandler = (err, req, res, next) => {
   const isProduction = process.env.NODE_ENV === 'production';
   const statusCode = err.statusCode || 500;
+
+  if (statusCode === 500) {
+    console.error('[ERROR]', err.message);
+    console.error('[STACK]', err.stack);
+  }
+
   const payload = {
     success: false,
     message: err.message || 'Internal Server Error'
