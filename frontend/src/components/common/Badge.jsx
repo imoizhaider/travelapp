@@ -1,0 +1,12 @@
+import React from 'react';
+
+export default function Badge({ children, tone = 'default' }) {
+  const tones = {
+    default: 'bg-white/10 text-slate-100',
+    info: 'bg-ocean-500/15 text-ocean-100',
+    success: 'bg-emerald-500/15 text-emerald-100',
+    warning: 'bg-amber-500/15 text-amber-100'
+  };
+
+  return <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${tones[tone]}`}>{children}</span>;
+}

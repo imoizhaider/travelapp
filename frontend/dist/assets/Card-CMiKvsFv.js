@@ -1,0 +1,1 @@
+import{j as e,i as t}from"./index-x3UyloLK.js";function d({children:r,className:o="",...s}){return e.jsx("div",{className:t("rounded-3xl border border-white/10 bg-white/6 p-5 shadow-soft backdrop-blur-xl",o),...s,children:r})}export{d as C};
