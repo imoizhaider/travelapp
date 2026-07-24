@@ -32,12 +32,14 @@ const createShareLink = asyncHandler(async (req, res) => {
 
 const listShareLinks = asyncHandler(async (req, res) => {
   const tripId = Number(req.params.tripId);
+  await ensureEditableTrip(tripId, req.user.userId);
   const result = await pool.query(sharingQueries.listShareLinks, [tripId]);
   res.json({ success: true, data: result.rows });
 });
 
 const listCollaborators = asyncHandler(async (req, res) => {
   const tripId = Number(req.params.tripId);
+  await ensureEditableTrip(tripId, req.user.userId);
   const result = await pool.query(sharingQueries.listCollaborators, [tripId]);
   res.json({ success: true, data: result.rows });
 });

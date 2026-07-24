@@ -3,7 +3,7 @@ const { z } = require('zod');
 
 const controller = require('../controllers/hotels.controller');
 const validate = require('../middlewares/validate.middleware');
-const { authenticate } = require('../middlewares/auth.middleware');
+const { authenticate, authorize } = require('../middlewares/auth.middleware');
 
 const router = express.Router({ mergeParams: true });
 
@@ -36,9 +36,9 @@ const bookingSchema = z.object({
 });
 
 router.get('/destinations/:destinationId/hotels', controller.listHotels);
-router.post('/destinations/:destinationId/hotels', authenticate, validate(hotelSchema), controller.createHotel);
-router.put('/hotels/:hotelId', authenticate, validate(hotelSchema), controller.updateHotel);
-router.delete('/hotels/:hotelId', authenticate, controller.deleteHotel);
+router.post('/destinations/:destinationId/hotels', authenticate, authorize('Administrator'), validate(hotelSchema), controller.createHotel);
+router.put('/hotels/:hotelId', authenticate, authorize('Administrator'), validate(hotelSchema), controller.updateHotel);
+router.delete('/hotels/:hotelId', authenticate, authorize('Administrator'), controller.deleteHotel);
 router.post('/hotels/:hotelId/mock-bookings', authenticate, validate(bookingSchema), controller.createMockBooking);
 
 module.exports = router;

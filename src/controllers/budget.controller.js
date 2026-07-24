@@ -11,8 +11,18 @@ const ensureEditableTrip = async (tripId, userId) => {
   }
 };
 
+const ensureAccessibleTrip = async (tripId, userId) => {
+  const result = await pool.query(tripQueries.checkAccessible, [tripId, userId]);
+
+  if (!result.rows.length) {
+    throw new ApiError(403, 'You do not have access to this trip');
+  }
+};
+
 const getBudget = asyncHandler(async (req, res) => {
   const tripId = Number(req.params.tripId);
+  await ensureAccessibleTrip(tripId, req.user.userId);
+
   const estimateResult = await pool.query(budgetQueries.getEstimateByTrip, [tripId]);
 
   if (!estimateResult.rows.length) {
@@ -69,6 +79,14 @@ const addBudgetItem = asyncHandler(async (req, res) => {
 
 const updateBudgetItem = asyncHandler(async (req, res) => {
   const budgetItemId = Number(req.params.budgetItemId);
+  const itemResult = await pool.query(budgetQueries.getTripByItemId, [budgetItemId]);
+
+  if (!itemResult.rows.length) {
+    throw new ApiError(404, 'Budget item not found');
+  }
+
+  await ensureEditableTrip(itemResult.rows[0].trip_id, req.user.userId);
+
   const body = req.validated.body;
   const result = await pool.query(budgetQueries.updateItem, [
     budgetItemId,
@@ -88,6 +106,14 @@ const updateBudgetItem = asyncHandler(async (req, res) => {
 
 const deleteBudgetItem = asyncHandler(async (req, res) => {
   const budgetItemId = Number(req.params.budgetItemId);
+  const itemResult = await pool.query(budgetQueries.getTripByItemId, [budgetItemId]);
+
+  if (!itemResult.rows.length) {
+    throw new ApiError(404, 'Budget item not found');
+  }
+
+  await ensureEditableTrip(itemResult.rows[0].trip_id, req.user.userId);
+
   const result = await pool.query(budgetQueries.removeItem, [budgetItemId]);
 
   if (!result.rows.length) {

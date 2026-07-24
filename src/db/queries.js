@@ -128,6 +128,16 @@ const tripQueries = {
     WHERE t.trip_id = $1 AND (t.owner_user_id = $2 OR tc.user_id IS NOT NULL)
     LIMIT 1
   `,
+  checkAccessible: `
+    SELECT 1
+    FROM trips t
+    LEFT JOIN trip_collaborators tc
+      ON tc.trip_id = t.trip_id
+     AND tc.user_id = $2
+     AND tc.collaborator_status = 'accepted'
+    WHERE t.trip_id = $1 AND (t.owner_user_id = $2 OR tc.user_id IS NOT NULL)
+    LIMIT 1
+  `,
   listCollaborators: `
     SELECT tc.trip_id, tc.user_id, tc.invited_by_user_id, tc.access_level, tc.collaborator_status,
            tc.created_at, tc.accepted_at,
@@ -167,6 +177,7 @@ const itineraryQueries = {
     WHERE i.trip_id = $1
     ORDER BY i.item_date ASC, i.sort_order ASC, i.start_time ASC NULLS LAST
   `,
+  getTripByItemId: 'SELECT trip_id FROM itinerary_items WHERE itinerary_item_id = $1 LIMIT 1',
   create: `
     INSERT INTO itinerary_items
       (trip_id, category_id, destination_id, item_date, start_time, end_time, item_title, location_name, notes, estimated_cost, is_completed, sort_order)
@@ -233,6 +244,13 @@ const weatherQueries = {
 
 const budgetQueries = {
   getEstimateByTrip: 'SELECT * FROM budget_estimates WHERE trip_id = $1 LIMIT 1',
+  getTripByItemId: `
+    SELECT be.trip_id
+    FROM budget_items bi
+    JOIN budget_estimates be ON be.budget_estimate_id = bi.budget_estimate_id
+    WHERE bi.budget_item_id = $1
+    LIMIT 1
+  `,
   upsertEstimate: `
     INSERT INTO budget_estimates (trip_id, currency_code, total_estimated, contingency_amount)
     VALUES ($1, $2, $3, $4)
@@ -328,8 +346,13 @@ const sharingQueries = {
   listCollaborators: tripQueries.listCollaborators
 };
 
+const authQueriesExtended = {
+  checkUserActive: 'SELECT user_id, is_active FROM users WHERE user_id = $1 LIMIT 1'
+};
+
 module.exports = {
   authQueries,
+  authQueriesExtended,
   destinationQueries,
   tripQueries,
   itineraryQueries,

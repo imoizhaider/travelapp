@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
+const pool = require('../config/db');
+const { authQueriesExtended } = require('../db/queries');
 const ApiError = require('../utils/apiError');
 
-const authenticate = (req, res, next) => {
+const authenticate = async (req, res, next) => {
   const header = req.headers.authorization;
 
   if (!header || !header.startsWith('Bearer ')) {
@@ -11,8 +13,18 @@ const authenticate = (req, res, next) => {
   try {
     const token = header.slice(7);
     req.user = jwt.verify(token, process.env.JWT_SECRET);
+
+    const userResult = await pool.query(authQueriesExtended.checkUserActive, [req.user.userId]);
+
+    if (!userResult.rows.length || !userResult.rows[0].is_active) {
+      return next(new ApiError(401, 'Account is disabled or has been removed'));
+    }
+
     return next();
   } catch (error) {
+    if (error instanceof ApiError) {
+      return next(error);
+    }
     return next(new ApiError(401, 'Token is invalid or expired'));
   }
 };

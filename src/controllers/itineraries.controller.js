@@ -42,6 +42,14 @@ const createItem = asyncHandler(async (req, res) => {
 
 const updateItem = asyncHandler(async (req, res) => {
   const itineraryItemId = Number(req.params.itineraryItemId);
+  const itemResult = await pool.query(itineraryQueries.getTripByItemId, [itineraryItemId]);
+
+  if (!itemResult.rows.length) {
+    throw new ApiError(404, 'Itinerary item not found');
+  }
+
+  await ensureEditableTrip(itemResult.rows[0].trip_id, req.user.userId);
+
   const body = req.validated.body;
   const result = await pool.query(itineraryQueries.update, [
     itineraryItemId,
@@ -67,6 +75,14 @@ const updateItem = asyncHandler(async (req, res) => {
 
 const deleteItem = asyncHandler(async (req, res) => {
   const itineraryItemId = Number(req.params.itineraryItemId);
+  const itemResult = await pool.query(itineraryQueries.getTripByItemId, [itineraryItemId]);
+
+  if (!itemResult.rows.length) {
+    throw new ApiError(404, 'Itinerary item not found');
+  }
+
+  await ensureEditableTrip(itemResult.rows[0].trip_id, req.user.userId);
+
   const result = await pool.query(itineraryQueries.remove, [itineraryItemId]);
 
   if (!result.rows.length) {
