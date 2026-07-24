@@ -8,7 +8,7 @@ export default function Avatar({ name = 'Traveler', imageUrl = '' }) {
   }
 
   return (
-    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-ocean-500 to-cyan-400 text-sm font-bold text-white ring-2 ring-white/10">
+    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-accent-blue to-accent-cyan text-sm font-bold text-white ring-2 ring-white/10">
       {initials}
     </div>
   );

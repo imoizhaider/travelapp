@@ -1,13 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   color-scheme: dark;
-  font-family: 'Inter', sans-serif;
-  background: #050816;
+  background: #070B1A;
 }
 
 html {
@@ -19,10 +16,11 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(45, 127, 249, 0.14), transparent 35%),
-    radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.08), transparent 20%),
-    linear-gradient(180deg, #050816 0%, #081120 42%, #050816 100%);
-  color: #f7f9fc;
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.10), transparent 35%),
+    radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.06), transparent 20%),
+    linear-gradient(180deg, #070B1A 0%, #0F1729 42%, #070B1A 100%);
+  color: #F1F5F9;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
 #root {
@@ -39,5 +37,5 @@ a {
 }
 
 ::selection {
-  background: rgba(45, 127, 249, 0.28);
+  background: rgba(59, 130, 246, 0.28);
 }

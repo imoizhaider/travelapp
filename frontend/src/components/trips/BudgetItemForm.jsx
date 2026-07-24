@@ -49,11 +49,11 @@ export default function BudgetItemForm({ open, onClose, onSave, initial }) {
 
   return (
     <Modal open={open} title={isEdit ? 'Edit Budget Item' : 'Add Budget Item'} onClose={onClose}>
-      {error ? <div className="mb-4 rounded-2xl border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-100">{error}</div> : null}
+      {error ? <div className="mb-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{error}</div> : null}
       <form className="grid gap-4 md:grid-cols-2" onSubmit={handleSubmit}>
         <label className="block space-y-1.5">
           <span className="text-sm font-medium text-slate-200">Category *</span>
-          <select value={form.budgetCategoryId} onChange={set('budgetCategoryId')} className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 outline-none">
+          <select value={form.budgetCategoryId} onChange={set('budgetCategoryId')} className="w-full rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-slate-100 outline-none">
             <option value="">Select category</option>
             {BUDGET_CATEGORIES.map((cat) => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
           </select>

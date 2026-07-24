@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import AppShell from '../components/layout/AppShell';
 import Loader from '../components/common/Loader';
@@ -25,9 +25,11 @@ function PageLoader() {
 }
 
 export default function AppRoutes() {
+  const location = useLocation();
+
   return (
     <Suspense fallback={<PageLoader />}>
-      <Routes>
+      <Routes location={location} key={location.pathname}>
         <Route element={<PublicRoute />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />

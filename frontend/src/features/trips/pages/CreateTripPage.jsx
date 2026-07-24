@@ -6,6 +6,7 @@ import Card from '../../../components/common/Card';
 import Input from '../../../components/common/Input';
 import Alert from '../../../components/common/Alert';
 import Loader from '../../../components/common/Loader';
+import Skeleton from '../../../components/common/Skeleton';
 import { useApi } from '../../../hooks/useApi';
 import { destinationsService } from '../../../services/destinations.service';
 import { tripsService } from '../../../services/trips.service';
@@ -50,14 +51,22 @@ export default function CreateTripPage() {
   };
 
   if (destinations.loading) {
-    return <div className="flex min-h-[60vh] items-center justify-center"><Loader label="Loading destinations..." /></div>;
+    return (
+      <div className="mx-auto max-w-3xl space-y-6 animate-fadeUp">
+        <div>
+          <h1 className="text-2xl font-semibold text-white">Create Trip</h1>
+          <p className="mt-1 text-sm text-slate-400">Build a structured trip with destination, schedule, and traveler details.</p>
+        </div>
+        <Skeleton variant="card" count={1} className="min-h-[400px]" />
+      </div>
+    );
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
+    <div className="mx-auto max-w-3xl space-y-6 animate-fadeUp">
       <div>
-        <h1 className="text-3xl font-semibold text-white">Create Trip</h1>
-        <p className="mt-2 text-sm text-slate-400">Build a structured trip with destination, schedule, and traveler details.</p>
+        <h1 className="text-2xl font-semibold text-white">Create Trip</h1>
+        <p className="mt-1 text-sm text-slate-400">Build a structured trip with destination, schedule, and traveler details.</p>
       </div>
       {destinations.error ? <Alert title="Destination list unavailable" message={destinations.error} /> : null}
       {error ? <Alert message={error} /> : null}
@@ -68,7 +77,7 @@ export default function CreateTripPage() {
             <select
               value={form.destinationId}
               onChange={(event) => setForm({ ...form, destinationId: event.target.value })}
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-slate-100 outline-none"
+              className="w-full rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-slate-100 outline-none"
             >
               <option value="">Select a destination</option>
               {destinationOptions.map((destination) => <option key={destination.destination_id} value={destination.destination_id}>{destination.destination_name}</option>)}
@@ -81,7 +90,7 @@ export default function CreateTripPage() {
           <Input label="Travelers" type="number" min="1" value={form.travelerCount} onChange={(event) => setForm({ ...form, travelerCount: event.target.value })} />
           <label className="block space-y-2">
             <span className="text-sm font-medium text-slate-200">Status</span>
-            <select value={form.tripStatus} onChange={(event) => setForm({ ...form, tripStatus: event.target.value })} className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-slate-100 outline-none">
+            <select value={form.tripStatus} onChange={(event) => setForm({ ...form, tripStatus: event.target.value })} className="w-full rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-slate-100 outline-none">
               <option value="draft">Draft</option>
               <option value="planned">Planned</option>
               <option value="active">Active</option>

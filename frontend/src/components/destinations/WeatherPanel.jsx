@@ -9,19 +9,19 @@ export default function WeatherPanel({ forecasts = [] }) {
     <Card>
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h3 className="text-lg font-semibold text-white">Weather</h3>
-          <p className="text-sm text-slate-300">Forecast for the selected destination</p>
+          <h3 className="text-base font-semibold text-white">Weather</h3>
+          <p className="text-sm text-slate-400">Forecast for the destination</p>
         </div>
-        <Badge tone="info">Live API</Badge>
+        <Badge tone="info">Live</Badge>
       </div>
       <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         {forecasts.length ? forecasts.map((forecast) => (
-          <div key={`${forecast.destination_id}-${forecast.forecast_date}`} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="text-sm text-slate-300">{formatDate(forecast.forecast_date)}</div>
-            <div className="mt-1 text-lg font-semibold text-white">{forecast.weather_condition}</div>
-            <div className="mt-2 text-sm text-slate-300">High {forecast.temperature_high_c ?? '—'}°C · Low {forecast.temperature_low_c ?? '—'}°C</div>
+          <div key={`${forecast.destination_id}-${forecast.forecast_date}`} className="rounded-xl border border-white/6 bg-white/3 p-4">
+            <div className="text-sm text-slate-400">{formatDate(forecast.forecast_date)}</div>
+            <div className="mt-1 text-base font-semibold text-white">{forecast.weather_condition}</div>
+            <div className="mt-1 text-sm text-slate-400">High {forecast.temperature_high_c ?? '—'}°C · Low {forecast.temperature_low_c ?? '—'}°C</div>
           </div>
-        )) : <div className="text-sm text-slate-400">No forecast data available yet.</div>}
+        )) : <div className="col-span-full text-sm text-slate-500">No forecast data available yet.</div>}
       </div>
     </Card>
   );
