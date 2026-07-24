@@ -14,15 +14,15 @@ export default function ProfilePage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6 animate-fadeUp">
       <div>
-        <h1 className="text-2xl font-semibold text-white">Profile</h1>
-        <p className="mt-1 text-sm text-slate-400">Review your account details and preferences.</p>
+        <h1 className="text-2xl font-semibold text-slate-800">Profile</h1>
+        <p className="mt-1 text-sm text-slate-500">Review your account details and preferences.</p>
       </div>
       <Card>
         <div className="flex items-center gap-4">
           <Avatar name={form.fullName || 'Traveler'} imageUrl={user?.profile?.avatarUrl} />
           <div>
-            <div className="text-lg font-semibold text-white">{form.fullName || 'Traveler'}</div>
-            <div className="text-sm text-slate-400">{user?.roleName}</div>
+            <div className="text-lg font-semibold text-slate-800">{form.fullName || 'Traveler'}</div>
+            <div className="text-sm text-slate-500">{user?.roleName}</div>
           </div>
         </div>
       </Card>
@@ -33,8 +33,8 @@ export default function ProfilePage() {
           <Input label="Timezone" value={form.timezone} readOnly />
           <Input label="Role" value={user?.roleName || ''} readOnly />
           <label className="block space-y-2 md:col-span-2">
-            <span className="text-sm font-medium text-slate-200">Bio</span>
-            <textarea value={form.bio} readOnly rows={4} className="w-full rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-slate-100 outline-none" />
+            <span className="text-sm font-medium text-slate-700">Bio</span>
+            <textarea value={form.bio} readOnly rows={4} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-700 outline-none" />
           </label>
         </div>
         <div className="mt-5 flex flex-wrap gap-3">

@@ -57,11 +57,11 @@ export default function ItineraryItemForm({ open, onClose, onSave, tripStartDate
 
   return (
     <Modal open={open} title={isEdit ? 'Edit Itinerary Item' : 'Add Itinerary Item'} onClose={onClose}>
-      {error ? <div className="mb-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{error}</div> : null}
+      {error ? <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div> : null}
       <form className="grid gap-4 md:grid-cols-2" onSubmit={handleSubmit}>
         <label className="block space-y-1.5">
-          <span className="text-sm font-medium text-slate-200">Category *</span>
-          <select value={form.categoryId} onChange={set('categoryId')} className="w-full rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-slate-100 outline-none">
+          <span className="text-sm font-medium text-slate-700">Category *</span>
+          <select value={form.categoryId} onChange={set('categoryId')} className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-700 outline-none">
             <option value="">Select category</option>
             {ITINERARY_CATEGORIES.map((cat) => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
           </select>
@@ -74,8 +74,8 @@ export default function ItineraryItemForm({ open, onClose, onSave, tripStartDate
         <Input label="Estimated cost ($)" type="number" min="0" step="0.01" value={form.estimatedCost} onChange={set('estimatedCost')} />
         <Input label="Sort order" type="number" min="0" value={form.sortOrder} onChange={set('sortOrder')} />
         <label className="block space-y-1.5 md:col-span-2">
-          <span className="text-sm font-medium text-slate-200">Notes</span>
-          <textarea value={form.notes} onChange={set('notes')} rows={3} className="w-full rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-slate-100 outline-none" />
+          <span className="text-sm font-medium text-slate-700">Notes</span>
+          <textarea value={form.notes} onChange={set('notes')} rows={3} className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-700 outline-none" />
         </label>
         <div className="flex justify-end gap-3 md:col-span-2">
           <Button variant="secondary" type="button" onClick={onClose}>Cancel</Button>

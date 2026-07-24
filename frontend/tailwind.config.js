@@ -4,47 +4,31 @@ export default {
   theme: {
     extend: {
       colors: {
-        surface: {
-          950: '#070B1A',
-          900: '#0F1729',
-          800: '#1A2542',
-          700: '#243358'
+        teal: {
+          50: '#F0FDFA',
+          100: '#CCFBF1',
+          500: '#14B8A6',
+          600: '#0D9488'
         },
-        accent: {
-          blue: '#3B82F6',
-          cyan: '#06B6D4',
-          gold: '#F59E0B'
-        },
-        glass: {
-          bg: 'rgba(255,255,255,0.04)',
-          'bg-hover': 'rgba(255,255,255,0.07)',
-          border: 'rgba(255,255,255,0.08)',
-          'border-hover': 'rgba(255,255,255,0.14)',
-          'bg-nested': 'rgba(255,255,255,0.03)'
-        },
-        ink: {
-          950: '#070B1A',
-          900: '#0F1729',
-          800: '#1A2542',
-          700: '#243358'
-        },
-        ocean: {
-          500: '#3B82F6'
+        amber: {
+          50: '#FFFBEB',
+          500: '#F59E0B',
+          600: '#D97706'
         }
       },
       fontFamily: {
-        display: ['"DM Serif Display"', 'Georgia', 'serif'],
         sans: ['Inter', 'system-ui', 'sans-serif']
       },
       boxShadow: {
-        soft: '0 20px 50px rgba(2, 6, 23, 0.35)',
-        lift: '0 16px 40px rgba(59, 130, 246, 0.16)',
-        glow: '0 0 30px rgba(245, 158, 11, 0.12)'
+        card: '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
+        'card-hover': '0 10px 30px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04)',
+        modal: '0 20px 60px rgba(0,0,0,0.12)',
+        nav: '0 1px 3px rgba(0,0,0,0.04)'
       },
       backgroundImage: {
-        hero: 'radial-gradient(circle at top left, rgba(59,130,246,0.18), transparent 34%), radial-gradient(circle at 85% 15%, rgba(255,255,255,0.10), transparent 24%), linear-gradient(135deg, #070B1A 0%, #0F1729 52%, #1A2542 100%)',
-        'gold-blue': 'linear-gradient(135deg, #F59E0B 0%, #3B82F6 100%)',
-        'blue-cyan': 'linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%)'
+        hero: 'linear-gradient(135deg, #0D9488 0%, #14B8A6 100%)',
+        'teal-cyan': 'linear-gradient(135deg, #0D9488 0%, #14B8A6 100%)',
+        'amber-teal': 'linear-gradient(135deg, #F59E0B 0%, #0D9488 100%)'
       },
       keyframes: {
         fadeUp: {

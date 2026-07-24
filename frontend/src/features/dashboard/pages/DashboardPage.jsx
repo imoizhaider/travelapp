@@ -4,7 +4,6 @@ import { CalendarDays, Compass, Hotel, Wallet } from 'lucide-react';
 import Card from '../../../components/common/Card';
 import Alert from '../../../components/common/Alert';
 import Badge from '../../../components/common/Badge';
-import Loader from '../../../components/common/Loader';
 import Skeleton from '../../../components/common/Skeleton';
 import TripCard from '../../../components/trips/TripCard';
 import { useAuth } from '../../../context/AuthContext';
@@ -41,34 +40,34 @@ export default function DashboardPage() {
       {trips.error ? <Alert title="Trips unavailable" message={trips.error} /> : null}
       {destinations.error ? <Alert title="Destination catalog unavailable" message={destinations.error} /> : null}
       <section className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-        <Card variant="elevated" className="bg-gradient-to-br from-white/6 to-accent-blue/8">
+        <Card className="border-teal-100 bg-gradient-to-br from-teal-50 to-white">
           <Badge tone="info">Welcome back</Badge>
-          <h1 className="mt-4 text-3xl font-semibold text-white">{user?.profile?.fullName || 'Traveler'}, your trip workspace is ready.</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Track active trips, review budgets, and manage collaborative planning from a single dashboard.</p>
+          <h1 className="mt-4 text-3xl font-semibold text-slate-800">{user?.profile?.fullName || 'Traveler'}, your trip workspace is ready.</h1>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">Track active trips, review budgets, and manage collaborative planning from a single dashboard.</p>
         </Card>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
           <Card>
-            <CalendarDays className="h-5 w-5 text-accent-blue" />
-            <div className="mt-4 text-sm text-slate-400">Trips</div>
-            <div className="mt-1 text-2xl font-semibold text-white">{tripCount}</div>
-            {tripCount > 0 ? <div className="mt-1 text-xs text-accent-gold">{tripCount} active trip{tripCount !== 1 ? 's' : ''}</div> : null}
+            <CalendarDays className="h-5 w-5 text-teal-600" />
+            <div className="mt-4 text-sm text-slate-500">Trips</div>
+            <div className="mt-1 text-2xl font-semibold text-slate-800">{tripCount}</div>
+            {tripCount > 0 ? <div className="mt-1 text-xs text-amber-600">{tripCount} active trip{tripCount !== 1 ? 's' : ''}</div> : null}
           </Card>
           <Card>
-            <Compass className="h-5 w-5 text-accent-blue" />
-            <div className="mt-4 text-sm text-slate-400">Destinations</div>
-            <div className="mt-1 text-2xl font-semibold text-white">{destinations.data?.length || 0}</div>
+            <Compass className="h-5 w-5 text-teal-600" />
+            <div className="mt-4 text-sm text-slate-500">Destinations</div>
+            <div className="mt-1 text-2xl font-semibold text-slate-800">{destinations.data?.length || 0}</div>
           </Card>
           <Card>
-            <Wallet className="h-5 w-5 text-accent-blue" />
-            <div className="mt-4 text-sm text-slate-400">Budget</div>
-            <div className="mt-1 text-2xl font-semibold text-white">—</div>
-            <div className="mt-1 text-xs text-slate-500">Set a budget on any trip</div>
+            <Wallet className="h-5 w-5 text-teal-600" />
+            <div className="mt-4 text-sm text-slate-500">Budget</div>
+            <div className="mt-1 text-2xl font-semibold text-slate-800">—</div>
+            <div className="mt-1 text-xs text-slate-400">Set a budget on any trip</div>
           </Card>
           <Card>
-            <Hotel className="h-5 w-5 text-accent-blue" />
-            <div className="mt-4 text-sm text-slate-400">Bookings</div>
-            <div className="mt-1 text-2xl font-semibold text-white">—</div>
-            <div className="mt-1 text-xs text-slate-500">Mock bookings available</div>
+            <Hotel className="h-5 w-5 text-teal-600" />
+            <div className="mt-4 text-sm text-slate-500">Bookings</div>
+            <div className="mt-1 text-2xl font-semibold text-slate-800">—</div>
+            <div className="mt-1 text-xs text-slate-400">Mock bookings available</div>
           </Card>
         </div>
       </section>
@@ -76,8 +75,8 @@ export default function DashboardPage() {
       <section>
         <div className="mb-4 flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-semibold text-white">Your trips</h2>
-            <p className="mt-1 text-sm text-slate-400">Open any trip to manage itinerary, weather, budget, and sharing.</p>
+            <h2 className="text-2xl font-semibold text-slate-800">Your trips</h2>
+            <p className="mt-1 text-sm text-slate-500">Open any trip to manage itinerary, weather, budget, and sharing.</p>
           </div>
         </div>
 
@@ -87,8 +86,8 @@ export default function DashboardPage() {
           ))}
           {!trips.data?.length ? (
             <div className="xl:col-span-2">
-              <Card className="text-center text-slate-400 py-8">
-                <Compass className="mx-auto h-8 w-8 text-slate-500" />
+              <Card className="py-8 text-center text-slate-400">
+                <Compass className="mx-auto h-8 w-8 text-slate-300" />
                 <p className="mt-3">No trips yet. Create your first trip to get started.</p>
               </Card>
             </div>

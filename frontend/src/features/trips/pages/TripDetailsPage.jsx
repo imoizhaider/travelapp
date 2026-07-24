@@ -5,7 +5,6 @@ import { CalendarDays, MapPin, Plus, Share2 } from 'lucide-react';
 import Card from '../../../components/common/Card';
 import Button from '../../../components/common/Button';
 import Alert from '../../../components/common/Alert';
-import Loader from '../../../components/common/Loader';
 import Skeleton from '../../../components/common/Skeleton';
 import EmptyState from '../../../components/common/EmptyState';
 import Badge from '../../../components/common/Badge';
@@ -134,16 +133,16 @@ export default function TripDetailsPage() {
       {weatherState.error ? <Alert title="Weather unavailable" message={weatherState.error} /> : null}
 
       <section className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-        <Card variant="elevated" className="bg-gradient-to-br from-white/6 to-accent-blue/8">
+        <Card className="border-teal-100 bg-gradient-to-br from-teal-50 to-white">
           <div className="flex flex-wrap items-center gap-3">
             <Badge tone="info">{trip.trip_status}</Badge>
             <Badge>{trip.destination_name}</Badge>
           </div>
-          <h1 className="mt-4 font-display text-3xl text-white">{trip.trip_title}</h1>
-          <p className="mt-1 text-sm text-slate-400">{trip.city}, {trip.country}</p>
-          <div className="mt-5 flex flex-wrap gap-3 text-sm text-slate-400">
-            <span className="inline-flex items-center gap-2 rounded-xl border border-white/6 bg-white/3 px-4 py-2"><CalendarDays className="h-4 w-4" /> {formatDate(trip.start_date)} - {formatDate(trip.end_date)}</span>
-            <span className="inline-flex items-center gap-2 rounded-xl border border-white/6 bg-white/3 px-4 py-2"><MapPin className="h-4 w-4" /> {trip.traveler_count} traveler{trip.traveler_count > 1 ? 's' : ''}</span>
+          <h1 className="mt-4 text-3xl text-slate-800">{trip.trip_title}</h1>
+          <p className="mt-1 text-sm text-slate-500">{trip.city}, {trip.country}</p>
+          <div className="mt-5 flex flex-wrap gap-3 text-sm text-slate-500">
+            <span className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 shadow-sm"><CalendarDays className="h-4 w-4" /> {formatDate(trip.start_date)} - {formatDate(trip.end_date)}</span>
+            <span className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 shadow-sm"><MapPin className="h-4 w-4" /> {trip.traveler_count} traveler{trip.traveler_count > 1 ? 's' : ''}</span>
           </div>
           <div className="mt-5 flex gap-3">
             <Button variant="secondary" onClick={() => setShowShareModal(true)}>
@@ -154,12 +153,12 @@ export default function TripDetailsPage() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <Card>
-            <div className="text-sm text-slate-400">Trip Purpose</div>
-            <div className="mt-1 text-lg font-semibold text-white">{trip.trip_purpose || 'Not specified'}</div>
+            <div className="text-sm text-slate-500">Trip Purpose</div>
+            <div className="mt-1 text-lg font-semibold text-slate-800">{trip.trip_purpose || 'Not specified'}</div>
           </Card>
           <Card>
-            <div className="text-sm text-slate-400">Trip Budget</div>
-            <div className="mt-1 text-lg font-semibold text-white">{budget?.estimate ? formatMoney(budget.estimate.total_estimated, budget.estimate.currency_code) : 'Not set'}</div>
+            <div className="text-sm text-slate-500">Trip Budget</div>
+            <div className="mt-1 text-lg font-semibold text-slate-800">{budget?.estimate ? formatMoney(budget.estimate.total_estimated, budget.estimate.currency_code) : 'Not set'}</div>
           </Card>
         </div>
       </section>
@@ -168,8 +167,8 @@ export default function TripDetailsPage() {
         <Card>
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <h2 className="text-lg font-semibold text-white">Itinerary</h2>
-              <p className="text-sm text-slate-400">Day-by-day travel plans.</p>
+              <h2 className="text-lg font-semibold text-slate-800">Itinerary</h2>
+              <p className="text-sm text-slate-500">Day-by-day travel plans.</p>
             </div>
             <Button variant="secondary" onClick={() => { setEditingItineraryItem(null); setShowItineraryForm(true); }}>
               <Plus className="h-4 w-4" /> Add Item
@@ -177,29 +176,29 @@ export default function TripDetailsPage() {
           </div>
           {itinerary.length ? Array.from(groupedItinerary.entries()).map(([date, items]) => (
             <div key={date} className="mb-5">
-              <div className="mb-3 text-sm font-semibold text-accent-blue">{formatDate(date)}</div>
+              <div className="mb-3 text-sm font-semibold text-teal-600">{formatDate(date)}</div>
               <div className="space-y-3">
                 {items.map((item) => (
-                  <div key={item.itinerary_item_id} className="rounded-xl border border-white/6 bg-white/3 p-4 group">
+                  <div key={item.itinerary_item_id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm hover:shadow-card-hover transition group">
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold text-white">{item.item_title}</span>
-                          <span className="rounded-full bg-white/8 px-2 py-0.5 text-xs text-slate-400">{item.category_name}</span>
+                          <span className="font-semibold text-slate-800">{item.item_title}</span>
+                          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-500">{item.category_name}</span>
                           {item.is_completed ? <Badge tone="success">Done</Badge> : <Badge>Planned</Badge>}
                         </div>
-                        <div className="mt-1 text-sm text-slate-400">
+                        <div className="mt-1 text-sm text-slate-500">
                           {item.start_time ? <span>{item.start_time.slice(0, 5)}{item.end_time ? ` - ${item.end_time.slice(0, 5)}` : ''} · </span> : null}
                           {item.location_name ? <span>{item.location_name} · </span> : null}
                           {item.estimated_cost ? <span>{formatMoney(item.estimated_cost)}</span> : null}
                         </div>
-                        {item.notes ? <p className="mt-2 text-sm text-slate-500">{item.notes}</p> : null}
+                        {item.notes ? <p className="mt-2 text-sm text-slate-400">{item.notes}</p> : null}
                       </div>
                       <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition">
-                        <button onClick={() => { setEditingItineraryItem(item); setShowItineraryForm(true); }} className="rounded-lg bg-white/8 p-1.5 text-slate-400 hover:bg-white/12 transition" title="Edit">
+                        <button onClick={() => { setEditingItineraryItem(item); setShowItineraryForm(true); }} className="rounded-lg bg-slate-100 p-1.5 text-slate-400 hover:bg-slate-200 transition" title="Edit">
                           <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                         </button>
-                        <button onClick={() => handleDeleteItineraryItem(item.itinerary_item_id)} className="rounded-lg bg-white/8 p-1.5 text-rose-400 hover:bg-rose-500/20 transition" title="Delete">
+                        <button onClick={() => handleDeleteItineraryItem(item.itinerary_item_id)} className="rounded-lg bg-slate-100 p-1.5 text-red-400 hover:bg-red-50 transition" title="Delete">
                           <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                         </button>
                       </div>
@@ -216,24 +215,24 @@ export default function TripDetailsPage() {
           <Card>
             <div className="flex items-center justify-between gap-3">
               <div>
-                <h2 className="text-base font-semibold text-white">Sharing</h2>
-                <p className="text-sm text-slate-400">Collaborators and share links</p>
+                <h2 className="text-base font-semibold text-slate-800">Sharing</h2>
+                <p className="text-sm text-slate-500">Collaborators and share links</p>
               </div>
-              <Share2 className="h-5 w-5 text-accent-blue" />
+              <Share2 className="h-5 w-5 text-teal-600" />
             </div>
-            <div className="mt-4 space-y-3 text-sm text-slate-400">
+            <div className="mt-4 space-y-3 text-sm text-slate-500">
               <div className="flex justify-between">
                 <span>Collaborators</span>
-                <span className="font-semibold text-white">{collaborators.length}</span>
+                <span className="font-semibold text-slate-800">{collaborators.length}</span>
               </div>
               <div className="flex justify-between">
                 <span>Share links</span>
-                <span className="font-semibold text-white">{shareLinks.length}</span>
+                <span className="font-semibold text-slate-800">{shareLinks.length}</span>
               </div>
               {collaborators.slice(0, 3).map((c) => (
-                <div key={c.user_id} className="rounded-xl border border-white/6 bg-white/3 px-4 py-3">
-                  <span className="text-slate-200">{c.full_name || c.email}</span>
-                  <span className="ml-2 rounded-full bg-white/8 px-2 py-0.5 text-xs text-slate-400">{c.access_level}</span>
+                <div key={c.user_id} className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                  <span className="text-slate-700">{c.full_name || c.email}</span>
+                  <span className="ml-2 rounded-full bg-slate-200 px-2 py-0.5 text-xs text-slate-500">{c.access_level}</span>
                 </div>
               ))}
               <Button variant="secondary" size="sm" className="w-full" onClick={() => setShowShareModal(true)}>
@@ -258,14 +257,14 @@ export default function TripDetailsPage() {
         <Card>
           <div className="flex items-center justify-between gap-3">
             <div>
-              <h2 className="text-lg font-semibold text-white">Hotels</h2>
-              <p className="text-sm text-slate-400">Hotel listings for planning and budget comparison.</p>
+              <h2 className="text-lg font-semibold text-slate-800">Hotels</h2>
+              <p className="text-sm text-slate-500">Hotel listings for planning and budget comparison.</p>
             </div>
           </div>
           <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {hotels.length ? hotels.slice(0, 6).map((hotel) => (
               <HotelCard key={hotel.hotel_id} hotel={hotel} onBook={(h) => alert(`Booking for ${h.hotel_name}`)} onFavorite={(h) => alert(`Save ${h.hotel_name} to favorites`)} />
-            )) : <div className="md:col-span-2 xl:col-span-3 text-sm text-slate-500">No hotel listings available for this destination.</div>}
+            )) : <div className="md:col-span-2 xl:col-span-3 text-sm text-slate-400">No hotel listings available for this destination.</div>}
           </div>
         </Card>
       </section>

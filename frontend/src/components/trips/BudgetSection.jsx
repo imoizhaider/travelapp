@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Edit3, Plus, Trash2, Wallet } from 'lucide-react';
 
 import Card from '../common/Card';
-import Badge from '../common/Badge';
 import Button from '../common/Button';
 import EmptyState from '../common/EmptyState';
 import BudgetItemForm from './BudgetItemForm';
@@ -66,10 +65,10 @@ export default function BudgetSection({ budget, tripId, onSaveBudget, onAddItem,
     <Card>
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <Wallet className="h-5 w-5 text-accent-blue" />
+          <Wallet className="h-5 w-5 text-teal-600" />
           <div>
-            <h2 className="text-base font-semibold text-white">Budget</h2>
-            <p className="text-sm text-slate-400">Track lodging, transport, food, and more</p>
+            <h2 className="text-base font-semibold text-slate-800">Budget</h2>
+            <p className="text-sm text-slate-500">Track lodging, transport, food, and more</p>
           </div>
         </div>
         <div className="flex gap-2">
@@ -82,37 +81,37 @@ export default function BudgetSection({ budget, tripId, onSaveBudget, onAddItem,
 
       {estimate ? (
         <div className="mt-4 grid gap-4 sm:grid-cols-3">
-          <div className={`rounded-xl border p-4 ${isUnderBudget ? 'border-accent-gold/30 bg-accent-gold/5' : 'border-white/6 bg-white/3'}`}>
+          <div className={`rounded-lg border p-4 ${isUnderBudget ? 'border-teal-200 bg-teal-50' : 'border-slate-200 bg-slate-50'}`}>
             <div className="text-xs uppercase tracking-wide text-slate-500">Total Estimated</div>
-            <div className="mt-1 text-xl font-semibold text-white">{formatMoney(estimate.total_estimated, estimate.currency_code)}</div>
-            {isUnderBudget ? <div className="mt-1 text-xs text-accent-gold">Premium budget tier</div> : null}
+            <div className="mt-1 text-xl font-semibold text-slate-800">{formatMoney(estimate.total_estimated, estimate.currency_code)}</div>
+            {isUnderBudget ? <div className="mt-1 text-xs text-teal-600">Under budget</div> : null}
           </div>
-          <div className="rounded-xl border border-white/6 bg-white/3 p-4">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
             <div className="text-xs uppercase tracking-wide text-slate-500">Items Total</div>
-            <div className="mt-1 text-xl font-semibold text-white">{formatMoney(totalItems, estimate.currency_code)}</div>
+            <div className="mt-1 text-xl font-semibold text-slate-800">{formatMoney(totalItems, estimate.currency_code)}</div>
           </div>
-          <div className="rounded-xl border border-white/6 bg-white/3 p-4">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
             <div className="text-xs uppercase tracking-wide text-slate-500">Contingency</div>
-            <div className="mt-1 text-xl font-semibold text-accent-gold">{formatMoney(estimate.contingency_amount, estimate.currency_code)}</div>
+            <div className="mt-1 text-xl font-semibold text-teal-600">{formatMoney(estimate.contingency_amount, estimate.currency_code)}</div>
           </div>
         </div>
       ) : null}
 
       {estimate && items.length ? (
         <div className="mt-4 space-y-2">
-          <div className="text-sm font-semibold text-slate-300">Expense Breakdown</div>
+          <div className="text-sm font-semibold text-slate-600">Expense Breakdown</div>
           {items.map((item) => (
-            <div key={item.budget_item_id} className="flex items-center justify-between rounded-xl border border-white/6 bg-white/3 px-4 py-3 text-sm group">
+            <div key={item.budget_item_id} className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3 text-sm group">
               <div>
-                <span className="text-slate-200">{item.item_description}</span>
-                <span className="ml-2 rounded-full bg-white/8 px-2 py-0.5 text-xs text-slate-400">{item.category_name}</span>
+                <span className="text-slate-700">{item.item_description}</span>
+                <span className="ml-2 rounded-full bg-slate-200 px-2 py-0.5 text-xs text-slate-500">{item.category_name}</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-white">{formatMoney(item.amount, estimate.currency_code)}</span>
-                <button onClick={() => { setEditingItem(item); setShowItemForm(true); }} className="opacity-0 group-hover:opacity-100 rounded-lg bg-white/8 p-1.5 text-slate-400 hover:bg-white/12 transition">
+                <span className="text-slate-800 font-medium">{formatMoney(item.amount, estimate.currency_code)}</span>
+                <button onClick={() => { setEditingItem(item); setShowItemForm(true); }} className="opacity-0 group-hover:opacity-100 rounded-lg bg-white p-1.5 text-slate-400 hover:bg-slate-100 transition shadow-sm">
                   <Edit3 className="h-3.5 w-3.5" />
                 </button>
-                <button onClick={() => handleDeleteItem(item.budget_item_id)} className="opacity-0 group-hover:opacity-100 rounded-lg bg-white/8 p-1.5 text-rose-400 hover:bg-rose-500/20 transition">
+                <button onClick={() => handleDeleteItem(item.budget_item_id)} className="opacity-0 group-hover:opacity-100 rounded-lg bg-white p-1.5 text-red-400 hover:bg-red-50 transition shadow-sm">
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -128,12 +127,12 @@ export default function BudgetSection({ budget, tripId, onSaveBudget, onAddItem,
       ) : null}
 
       {showBudgetForm ? (
-        <div className="mt-4 rounded-xl border border-accent-blue/20 bg-accent-blue/5 p-4">
-          <h4 className="mb-3 text-sm font-semibold text-slate-200">{estimate ? 'Edit Budget' : 'Set Budget'}</h4>
+        <div className="mt-4 rounded-lg border border-teal-200 bg-teal-50 p-4">
+          <h4 className="mb-3 text-sm font-semibold text-slate-700">{estimate ? 'Edit Budget' : 'Set Budget'}</h4>
           <div className="grid gap-3 sm:grid-cols-3">
             <label className="block space-y-1">
-              <span className="text-xs text-slate-400">Currency</span>
-              <select value={budgetForm.currencyCode} onChange={(e) => setBudgetForm({ ...budgetForm, currencyCode: e.target.value })} className="w-full rounded-xl border border-white/8 bg-white/4 px-3 py-2 text-sm text-slate-100 outline-none">
+              <span className="text-xs text-slate-500">Currency</span>
+              <select value={budgetForm.currencyCode} onChange={(e) => setBudgetForm({ ...budgetForm, currencyCode: e.target.value })} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 outline-none">
                 <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
                 <option value="GBP">GBP</option>
@@ -142,12 +141,12 @@ export default function BudgetSection({ budget, tripId, onSaveBudget, onAddItem,
               </select>
             </label>
             <label className="block space-y-1">
-              <span className="text-xs text-slate-400">Total Estimated</span>
-              <input type="number" min="0" value={budgetForm.totalEstimated} onChange={(e) => setBudgetForm({ ...budgetForm, totalEstimated: e.target.value })} className="w-full rounded-xl border border-white/8 bg-white/4 px-3 py-2 text-sm text-slate-100 outline-none" />
+              <span className="text-xs text-slate-500">Total Estimated</span>
+              <input type="number" min="0" value={budgetForm.totalEstimated} onChange={(e) => setBudgetForm({ ...budgetForm, totalEstimated: e.target.value })} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 outline-none" />
             </label>
             <label className="block space-y-1">
-              <span className="text-xs text-slate-400">Contingency</span>
-              <input type="number" min="0" value={budgetForm.contingencyAmount} onChange={(e) => setBudgetForm({ ...budgetForm, contingencyAmount: e.target.value })} className="w-full rounded-xl border border-white/8 bg-white/4 px-3 py-2 text-sm text-slate-100 outline-none" />
+              <span className="text-xs text-slate-500">Contingency</span>
+              <input type="number" min="0" value={budgetForm.contingencyAmount} onChange={(e) => setBudgetForm({ ...budgetForm, contingencyAmount: e.target.value })} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 outline-none" />
             </label>
           </div>
           <div className="mt-3 flex justify-end gap-2">

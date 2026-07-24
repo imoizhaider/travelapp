@@ -19,8 +19,8 @@ export default function MyTripsPage() {
     return (
       <div className="space-y-6 animate-fadeUp">
         <div>
-          <h1 className="text-2xl font-semibold text-white">My Trips</h1>
-          <p className="mt-1 text-sm text-slate-400">Review and manage every trip in one place.</p>
+          <h1 className="text-2xl font-semibold text-slate-800">My Trips</h1>
+          <p className="mt-1 text-sm text-slate-500">Review and manage every trip in one place.</p>
         </div>
         <div className="grid gap-5 xl:grid-cols-2">
           <Skeleton variant="card" count={2} />
@@ -35,8 +35,8 @@ export default function MyTripsPage() {
     <div className="space-y-6 animate-fadeUp">
       {trips.error ? <Alert title="Trips unavailable" message={trips.error} /> : null}
       <div>
-        <h1 className="text-2xl font-semibold text-white">My Trips</h1>
-        <p className="mt-1 text-sm text-slate-400">Review and manage every trip in one place.</p>
+        <h1 className="text-2xl font-semibold text-slate-800">My Trips</h1>
+        <p className="mt-1 text-sm text-slate-500">Review and manage every trip in one place.</p>
       </div>
       {(trips.data || []).length ? (
         <div className="grid gap-5 xl:grid-cols-2">

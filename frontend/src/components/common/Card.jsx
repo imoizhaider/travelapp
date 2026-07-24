@@ -3,10 +3,10 @@ import clsx from 'clsx';
 
 export default function Card({ children, className = '', variant = 'default', ...props }) {
   const styles = {
-    default: 'rounded-2xl border border-white/8 bg-white/4 backdrop-blur-xl',
-    elevated: 'rounded-2xl border border-white/10 bg-white/6 backdrop-blur-xl shadow-lift',
-    nested: 'rounded-xl border border-white/6 bg-white/3',
-    gold: 'rounded-2xl border border-accent-gold/30 bg-white/4 backdrop-blur-xl shadow-glow'
+    default: 'rounded-xl border border-slate-200 bg-white shadow-card',
+    elevated: 'rounded-xl border border-slate-200 bg-white shadow-card-hover',
+    nested: 'rounded-lg bg-slate-50 border border-slate-100',
+    teal: 'rounded-xl border border-teal-200 bg-teal-50 shadow-card'
   };
 
   return (

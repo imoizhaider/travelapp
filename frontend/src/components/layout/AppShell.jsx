@@ -8,7 +8,7 @@ export default function AppShell({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-surface-950 text-slate-50">
+    <div className="min-h-screen bg-slate-50 text-slate-800">
       <Navbar onMenuClick={() => setSidebarOpen((value) => !value)} />
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-7xl">
         <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block`}>
