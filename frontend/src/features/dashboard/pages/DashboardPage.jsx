@@ -1,20 +1,39 @@
-import React from 'react';
-import { CalendarDays, Compass, Hotel, Wallet } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { CalendarDays, Compass, Hotel, Wallet, ArrowRight, MapPin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 import Card from '../../../components/common/Card';
 import Alert from '../../../components/common/Alert';
 import Badge from '../../../components/common/Badge';
+import Button from '../../../components/common/Button';
 import Skeleton from '../../../components/common/Skeleton';
 import TripCard from '../../../components/trips/TripCard';
 import { useAuth } from '../../../context/AuthContext';
 import { useApi } from '../../../hooks/useApi';
 import { tripsService } from '../../../services/trips.service';
 import { destinationsService } from '../../../services/destinations.service';
+import { formatDate } from '../../../utils/formatters';
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const trips = useApi(() => tripsService.list(), []);
   const destinations = useApi(() => destinationsService.list(), []);
+
+  const upcomingTrip = useMemo(() => {
+    const list = trips.data || [];
+    if (!list.length) return null;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const upcoming = list
+      .filter((t) => new Date(t.start_date) >= today)
+      .sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
+    if (upcoming.length) return upcoming[0];
+    const recent = list
+      .filter((t) => new Date(t.start_date) < today)
+      .sort((a, b) => new Date(b.start_date) - new Date(a.start_date));
+    return recent[0] || null;
+  }, [trips.data]);
 
   if (trips.loading || destinations.loading) {
     return (
@@ -71,6 +90,34 @@ export default function DashboardPage() {
           </Card>
         </div>
       </section>
+
+      {upcomingTrip ? (
+        <section>
+          <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-white">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-100 text-amber-600 shrink-0">
+                  <MapPin className="h-6 w-6" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <Badge>{upcomingTrip.trip_status}</Badge>
+                    <span className="text-xs text-slate-400">{upcomingTrip.destination_name}</span>
+                  </div>
+                  <h2 className="mt-1 text-lg font-semibold text-slate-800">{upcomingTrip.trip_title}</h2>
+                  <p className="mt-1 text-sm text-slate-500">
+                    <CalendarDays className="mr-1 inline-block h-3.5 w-3.5" />
+                    {formatDate(upcomingTrip.start_date)} - {formatDate(upcomingTrip.end_date)}
+                  </p>
+                </div>
+              </div>
+              <Button size="sm" onClick={() => navigate(`/trips/${upcomingTrip.trip_id}`)}>
+                View Trip <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </Card>
+        </section>
+      ) : null}
 
       <section>
         <div className="mb-4 flex items-end justify-between gap-4">
