@@ -1,7 +1,19 @@
 const { Pool } = require('pg');
 
+const DATABASE_URL = process.env.DATABASE_URL;
+
+if (!DATABASE_URL) {
+  console.error('[DB] FATAL: DATABASE_URL is not set');
+}
+
+const redactedUrl = DATABASE_URL
+  ? DATABASE_URL.replace(/\/\/[^:]+:[^@]+@/, '//***:***@')
+  : 'MISSING';
+console.log('[DB] DATABASE_URL:', redactedUrl);
+console.log('[DB] NODE_ENV:', process.env.NODE_ENV);
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: DATABASE_URL,
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000,
@@ -11,7 +23,7 @@ const pool = new Pool({
 });
 
 pool.on('error', (err) => {
-  console.error('Unexpected database pool error:', err.message);
+  console.error('[DB] Unexpected database pool error:', err.message);
 });
 
 module.exports = pool;
